@@ -4,7 +4,11 @@ class HeadlinesController < ApplicationController
 
 	def index
 
-	kimono_url = "http://www.kimonolabs.com/api/daal66ou?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
+	if Rails.env.production?
+		kimono_url = "https://www.kimonolabs.com/api/daal66ou?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
+	else
+		kimono_url = "http://www.kimonolabs.com/api/daal66ou?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
+	end
 
 	@response =  JSON.parse(RestClient.get(kimono_url))["results"]["collection1"]
 
