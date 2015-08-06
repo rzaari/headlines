@@ -1,17 +1,15 @@
 class HeadlinesController < ApplicationController
 
-	require 'rest_client'
+require 'rest_client'
+require 'rubygems'
+require 'bing_translator'
 
 	def index
 
-	if Rails.env.production?
-		kimono_headlines = "https://www.kimonolabs.com/api/2igf4iz2?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
-		kimono_subheadlines = "https://www.kimonolabs.com/api/dpzfoa9e?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
-	else
-		#kimono_url = "http://www.kimonolabs.com/api/daal66ou?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
-		kimono_headlines = "http://www.kimonolabs.com/api/2igf4iz2?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
-		kimono_subheadlines = "http://www.kimonolabs.com/api/dpzfoa9e?apikey=DtN9L9ZLkBTHdqfq50SeqG1JdbHuqpPX"
-	end
+#variables setup using Figaro gem
+	@translator = BingTranslator.new(ENV["bing_translator_client_id"], ENV["bing_translator_client_secret"]) 
+	kimono_headlines = ENV["kimono_headlines_key"]
+	kimono_subheadlines = ENV["kimono_subheadlines_key"]
 
 	@headline =  JSON.parse(RestClient.get(kimono_headlines))["results"]["collection1"]
 	@subheadline =  JSON.parse(RestClient.get(kimono_subheadlines))["results"]["collection1"]

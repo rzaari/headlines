@@ -1,46 +1,51 @@
-
 <div class="row">
 
 	<div class="col-md-4 col-md-offset-1">
-		<h2><strong>World Headlines </strong></h2>
+		<h1><strong>[ Headlinez ]</strong></h1>
 	</div>
- 	<div class="col-md-4 col-md-offset-1">
-		<h2><strong>Sub-Headlines</strong></h2>
-	</div>
-	<div class="col-md-2">
+	<div class="col-md-3">
+		<h3>(refresh to randomize)</h3>
+	</div> 
+	<div class="col-md-3">
 		<h3 class="text-right"><%= Time.now.strftime("%A, %B %e ") %></h3>
 	</div>
 
 </div>
 
 <div class="row">
-	<div class="col-md-11 col-md-offset-1">
+	<div class="col-md-10 col-md-offset-1">
 		<hr>
 	</div>
 </div>
 
-
-<div class="col-md-11 col-md-offset-1">	
-	<% @headline.each do |headline| %>
-		<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="col-md-6">
-				<h3 ><%= link_to headline["property1"]["text"], headline["property1"]["href"] %></h3>
-				<div class="text-left">
-					<small><em><%= headline["api"] %></em></small>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<% if !@subheadline.nil? %>
-						<% @subheadline.each do |subheadline| %>
-								<% if subheadline["api"] == headline["api"]+" sub" %>
-								<p ><%= link_to subheadline["property1"]["text"], subheadline["property1"]["href"] %></p>
-							<% end %>
-						<% end %>
+<div class="col-md-10 col-md-offset-1">
+	<% @headline.sample(3).each do |headline| %>
+			<div class="panel panel-default">
+			<div class="panel-body">
+	<!-- 			<div class="col-md-6"> -->
+				<% if @translator.detect(headline["property1"]["text"]) == :en %>
+					<h3 ><%= link_to headline["property1"]["text"], headline["property1"]["href"] %></h3>
+				<% else %>
+					<h3 ><%= link_to @translator.translate(headline["property1"]["text"], :to => 'en'), headline["property1"]["href"] %></h3>
+					<em><h4 class="translate"><%= headline["property1"]["text"] %></h4></em>
 				<% end %>
+
+					<div class="text-right">
+						<small><em><%= headline["api"] %></em></small>
+					</div>
+
+	<!-- 			</div> -->
+	<!-- 			<div class="col-md-6">
+					<% if !@subheadline.nil? %>
+							<% @subheadline.each do |subheadline| %>
+									<% if subheadline["api"] == headline["api"]+" sub" %>
+									<p ><%= link_to subheadline["property1"]["text"], subheadline["property1"]["href"] %></p>
+								<% end %>
+							<% end %>
+					<% end %>
+				</div> -->
 			</div>
-		</div>
-		</div>
+			</div>
 	<% end %>
 </div>
 

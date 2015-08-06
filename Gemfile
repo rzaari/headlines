@@ -32,6 +32,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #Gems for making REST calls (GET, Post, etc
 gem 'rest-client'
 gem 'json'
+# Bing Translator gem
+gem "bing_translator", "~> 4.4.0"
+# Figaro gem limits client keys from being uploaded to Github or Heroku
+gem "figaro"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
